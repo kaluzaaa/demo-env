@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo-env
+  name: demo-env
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-env
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: demo-env
+    spec:
+      containers:
+      - image: docker.io/lukaszkaluzny/demo-env
+        name: demo-env
+        env:
+          - name: one__two
+            value: ToJestTest
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo-env
+  name: demo-env
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: demo-env
+  type: LoadBalancer
+status:
+  loadBalancer: {}
